@@ -1,5 +1,5 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Application {
     ArrayList<LivingPremises> livingPremises = new ArrayList<>();
@@ -12,19 +12,19 @@ public class Application {
             switch (chooseOption()) {
                 case 1 -> showLivingMenu();
                 case 2 -> showCommercialMenu();
-                case 3 -> flag = false;
-                case 4 -> flag = false;
+                case 3 -> clearAllLists();
+                case 4 -> showLists();
                 case 0 -> flag = false;
                 default -> System.out.println("Выбрана невалидная опция, попробуйте ещё раз");
             }
         }
     }
 
-    void showMenu(MenuForm menuForm){
+    private void showMenu(MenuForm menuForm){
         System.out.println(menuForm.getMenuForm());
     }
 
-    public static int chooseOption(){
+    private static int chooseOption(){
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         int option=-1;
@@ -33,43 +33,93 @@ public class Application {
     }
 
     //TODO Заменить пункты-заглушки
-    public void showLivingMenu(){
+    private void showLivingMenu(){
         boolean createNoteflag = true;
         while (createNoteflag) {
             showMenu(MenuForm.LIVINGMENU);
             switch (chooseOption()) {
-                case 1 -> createNoteflag = false;
-                case 2 -> createNoteflag = false;
-                case 3 -> createNoteflag = false;
-                case 4 -> createNoteflag = false;
-                case 5 -> createNoteflag = false;
-                case 6 -> createNoteflag = false;
-                case 7 -> createNoteflag = false;
+                case 1 -> livingPremises.add(new LivingPremises());
+                case 2 -> deletePremises(livingPremises);
+                case 3 -> sortPremisesByPriceAsc(livingPremises);
+                case 4 -> sortPremisesByPriceDesc(livingPremises);
+                case 5 -> showGroupedBySubway(livingPremises);
+                case 6 -> showBestAvgRate(livingPremises);
+                case 7 -> showAllPremisesFromArrayList(livingPremises);
                 case 0 -> createNoteflag = false;
                 default -> System.out.println("Выбрана невалидная опция, попробуйте ещё раз");
             }
         }
     }
 
+    private <T extends Premises> void deletePremises(ArrayList<T> premises) {
+        System.out.print("Введите название позиции, которую следует удалить: ");
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        premises.removeAll(premises.stream().filter(p -> p.getDescription().equals(input)).toList());
+    }
+
+    private <T extends Premises> void sortPremisesByPriceAsc(ArrayList<T> premises){
+        premises.stream().sorted(Comparator.comparing(Premises::getPrice)).forEach(System.out::println);
+    }
+
+    private <T extends Premises> void sortPremisesByPriceDesc(ArrayList<T> premises){
+        premises.stream().sorted(Comparator.comparing(Premises::getPrice).reversed()).forEach(System.out::println);
+    }
+
+    private <T extends Premises> void showGroupedBySubway(ArrayList<T> premises) {
+        Map<String, List<T>> groupedPremises = premises.stream().collect(Collectors.groupingBy(Premises::getSubwayStation));
+        groupedPremises.forEach((subwayStation, premise) -> {
+            System.out.println(subwayStation);
+            premises.forEach(System.out::println);
+        });
+    }
+
+    private <T extends Premises> void showBestAvgRate(ArrayList<T> premises){
+        premises.stream().max(Comparator.comparing(Premises::getAvgRating)).ifPresent(System.out::println);
+    }
+
+    private <T extends Premises> void showAllPremisesFromArrayList(ArrayList<T> premises){
+        premises.forEach(System.out::println);
+    }
+
     //TODO Заменить пункты-заглушки
-    public void showCommercialMenu(){
+    private void showCommercialMenu(){
         boolean createNoteflag = true;
         while (createNoteflag) {
             showMenu(MenuForm.COMMERCIAL);
             switch (chooseOption()) {
-                case 1 -> createNoteflag = false;
-                case 2 -> createNoteflag = false;
-                case 3 -> createNoteflag = false;
-                case 4 -> createNoteflag = false;
-                case 5 -> createNoteflag = false;
-                case 6 -> createNoteflag = false;
-                case 7 -> createNoteflag = false;
+                case 1 -> commercialPremises.add(new CommercialPremises());
+                case 2 -> deletePremises(commercialPremises);
+                case 3 -> sortPremisesByPriceAsc(commercialPremises);
+                case 4 -> sortPremisesByPriceDesc(commercialPremises);
+                case 5 -> showGroupedBySubway(commercialPremises);
+                case 6 -> showBestAvgRate(commercialPremises);
+                case 7 -> showAllPremisesFromArrayList(commercialPremises);
                 case 0 -> createNoteflag = false;
                 default -> System.out.println("Выбрана невалидная опция, попробуйте ещё раз");
             }
         }
     }
 
-    void addToList(){}
+
+
+    //TODO протестировать
+    private void clearAllLists(){
+        System.out.println("Вы действительно хотите очистить списки с недвижимостью? Введите Y/N и нажмите Enter");
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        switch (input){
+            case "Y" -> {livingPremises.clear();commercialPremises.clear();}
+            case "N" -> {}
+            default -> System.out.println("Выбрана невалидная опция, попробуйте ещё раз");
+        }
+    }
+
+    private void showLists(){
+        System.out.println("Жилая недвижимость\n");
+        livingPremises.forEach(System.out::println);
+        System.out.println("Коммерческая недвижимость\n");
+        livingPremises.forEach(System.out::println);
+    }
 
 }
