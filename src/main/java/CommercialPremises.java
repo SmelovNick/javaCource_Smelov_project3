@@ -30,4 +30,9 @@ public class CommercialPremises extends Premises{
             }
         }
     }
+
+    @Override
+    public String toString() {
+            return super.toString() + ", roomCount= " + '}';
+    }
 }

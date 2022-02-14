@@ -95,4 +95,14 @@ public abstract class Premises {
         if(input.length() >1) this.avgRating = Double.parseDouble(input);
     }
 
+    @Override
+    public String toString() {
+        return "Premises{" +
+                "description='" + description + '\'' +
+                ", subwayStation='" + subwayStation + '\'' +
+                ", address='" + address + '\'' +
+                ", area=" + area +
+                ", price=" + price +
+                ", avgRating=" + avgRating;
+    }
 }

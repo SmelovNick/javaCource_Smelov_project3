@@ -13,4 +13,9 @@ public class LivingPremises extends Premises{
         input = scanner.nextLine();
         if(input.length() >1) this.roomCount = Integer.parseInt(input);
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", roomCount= " + roomCount + "}";
+    }
 }
