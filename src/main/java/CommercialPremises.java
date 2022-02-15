@@ -1,3 +1,4 @@
+import java.util.Locale;
 import java.util.Scanner;
 
 public class CommercialPremises extends Premises{
@@ -9,19 +10,19 @@ public class CommercialPremises extends Premises{
         String input;
         boolean flag = true;
         while (flag) {
-            System.out.print("Введите тип помещения: ");
+            System.out.print("Введите один из трех типов коммерческой недвижимости - магазин, склад или офис: ");
             input = scanner.nextLine();
             if (input.length() != 0) {
-                switch (input) {
-                    case "Магазин" -> {
+                switch (input.toLowerCase(Locale.ROOT)) {
+                    case "магазин" -> {
                         this.type = CommercialPremisesType.SHOP;
                         flag = false;
                     }
-                    case "Склад" -> {
+                    case "склад" -> {
                         this.type = CommercialPremisesType.WAREHOUSE;
                         flag = false;
                     }
-                    case "Офис" -> {
+                    case "офис" -> {
                         this.type = CommercialPremisesType.OFFICE;
                         flag = false;
                     }
@@ -33,6 +34,6 @@ public class CommercialPremises extends Premises{
 
     @Override
     public String toString() {
-            return super.toString() + ", roomCount= " + '}';
+            return super.toString() + ", тип помещения= " + type.getType();
     }
 }

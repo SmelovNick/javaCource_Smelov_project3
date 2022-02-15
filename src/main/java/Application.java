@@ -59,18 +59,24 @@ public class Application {
     }
 
     private <T extends Premises> void sortPremisesByPriceAsc(ArrayList<T> premises){
-        premises.stream().sorted(Comparator.comparing(Premises::getPrice)).forEach(System.out::println);
+        premises
+                .stream()
+                .sorted(Comparator.comparing(Premises::getPrice))
+                .forEach( p -> System.out.printf("%s - %,.2f руб.- %1.2f\n", p.getDescription() , p.getPrice(), p.getAvgRating()));
     }
 
     private <T extends Premises> void sortPremisesByPriceDesc(ArrayList<T> premises){
-        premises.stream().sorted(Comparator.comparing(Premises::getPrice).reversed()).forEach(System.out::println);
+        premises
+                .stream()
+                .sorted(Comparator.comparing(Premises::getPrice).reversed())
+                .forEach( p -> System.out.printf("%s - %,.2f руб. - %1.2f\n", p.getDescription() , p.getPrice(), p.getAvgRating()));
     }
 
     private <T extends Premises> void showGroupedBySubway(ArrayList<T> premises) {
         Map<String, List<T>> groupedPremises = premises.stream().collect(Collectors.groupingBy(Premises::getSubwayStation));
         groupedPremises.forEach((subwayStation, premise) -> {
             System.out.println(subwayStation);
-            premises.forEach(System.out::println);
+            premise.forEach( p -> System.out.printf("%s - %,.2f руб. - %1.2f\n", p.getDescription() , p.getPrice(), p.getAvgRating()));
         });
     }
 
@@ -119,7 +125,6 @@ public class Application {
         System.out.println("Жилая недвижимость\n");
         livingPremises.forEach(System.out::println);
         System.out.println("Коммерческая недвижимость\n");
-        livingPremises.forEach(System.out::println);
+        commercialPremises.forEach(System.out::println);
     }
-
 }

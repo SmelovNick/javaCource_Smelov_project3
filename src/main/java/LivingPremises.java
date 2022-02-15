@@ -11,11 +11,11 @@ public class LivingPremises extends Premises{
 
         System.out.print("Введите количество комнат: ");
         input = scanner.nextLine();
-        if(input.length() >1) this.roomCount = Integer.parseInt(input);
+        if(input.length() !=0) this.roomCount = Integer.parseInt(input);
     }
 
     @Override
     public String toString() {
-        return super.toString() + ", roomCount= " + roomCount + "}";
+        return super.toString() + ", количество комнат=" + roomCount;
     }
 }

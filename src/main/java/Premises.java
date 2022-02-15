@@ -22,49 +22,31 @@ public abstract class Premises {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public String getSubwayStation() {
         return subwayStation;
     }
 
-    public void setSubwayStation(String subwayStation) {
-        this.subwayStation = subwayStation;
-    }
 
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public double getArea() {
         return area;
     }
 
-    public void setArea(double area) {
-        this.area = area;
-    }
 
     public double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
 
     public double getAvgRating() {
         return avgRating;
     }
 
-    public void setAvgRating(double avgRating) {
-        this.avgRating = avgRating;
-    }
 
     public Premises() {
         Scanner scanner = new Scanner(System.in);
@@ -92,17 +74,19 @@ public abstract class Premises {
 
         System.out.print("Введите среднуюю оценку: ");
         input = scanner.nextLine();
-        if(input.length() >1) this.avgRating = Double.parseDouble(input);
+        if(input.length() !=0) this.avgRating = Double.parseDouble(input);
     }
 
     @Override
     public String toString() {
-        return "Premises{" +
-                "description='" + description + '\'' +
-                ", subwayStation='" + subwayStation + '\'' +
-                ", address='" + address + '\'' +
-                ", area=" + area +
-                ", price=" + price +
-                ", avgRating=" + avgRating;
+        return "Объект недвижимости: " +
+                "название=" + description +
+                ", станция метро=" + subwayStation +
+                ", адрес=" + address +
+                ", площадь=" + area + " кв.м."+
+                ", цена=" + String.format("%,.2f руб.", price) +
+                ", средняя оценка=" + avgRating;
     }
+
+
 }
